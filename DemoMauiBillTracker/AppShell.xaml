@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="DemoMauiBillTracker.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DemoMauiBillTracker.Views"
+    Shell.FlyoutBehavior="Flyout">
+
+    <ShellContent
+    Title="Home"
+    ContentTemplate="{DataTemplate local:HomePage}"
+    Route="HomePage" />
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+     Title="Manage Periods"
+     ContentTemplate="{DataTemplate local:AddBillPeriodPage}"
+     Route="AddBillPeriodPage" />
+
+        <ShellContent
+     Title="Manage Bills"
+     ContentTemplate="{DataTemplate local:BillPage}"
+     Route="BillPage" />
+    </FlyoutItem>
+
+</Shell>

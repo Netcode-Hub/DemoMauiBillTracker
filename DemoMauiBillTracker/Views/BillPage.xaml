@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="DemoMauiBillTracker.Views.BillPage"
+              xmlns:dataGrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:viewmodel="clr-namespace:DemoMauiBillTracker.ViewModels"
+             x:DataType="viewmodel:BillPageViewModel"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Bill" Command="{Binding GotoAddBillCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="*" HeightRequest="600">
+        <dataGrid:SfDataGrid Grid.Row="1" ItemsSource="{Binding BillObjects}" ColumnWidthMode="Auto" AutoGenerateColumnsMode="None" SortingMode="Single" HorizontalOptions="CenterAndExpand"  SelectionMode="Single"  SelectedRow="{Binding SelectedRowData}" ShowSortNumbers="True">
+            <dataGrid:SfDataGrid.Columns>
+                <dataGrid:DataGridTextColumn HeaderText="Bill Name" MappingName="Name" />
+                <dataGrid:DataGridTextColumn HeaderText="Bill Amount" MappingName="Amount"/>
+                <dataGrid:DataGridTextColumn HeaderText="Bill Period" MappingName="BillPeriod.PeriodName" />
+                <dataGrid:DataGridTextColumn HeaderText="Bill Start Date" MappingName="StartingDate" Format="dd/MMM/yyyy"/>
+                <dataGrid:DataGridTextColumn HeaderText="Bill Status" MappingName="Active"/>
+            </dataGrid:SfDataGrid.Columns>
+        </dataGrid:SfDataGrid>
+    </Grid>
+</ContentPage>

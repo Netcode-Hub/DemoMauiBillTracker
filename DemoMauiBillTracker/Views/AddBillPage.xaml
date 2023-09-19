@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="DemoMauiBillTracker.Views.AddBillPage"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+             xmlns:button="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:viewmodel="clr-namespace:DemoMauiBillTracker.ViewModels"
+             x:DataType="viewmodel:AddBillPageViewModel"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Home" Command="{Binding GotoBillsPageCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Frame WidthRequest="400" Margin="10">
+            <VerticalStackLayout Spacing="10">
+                <inputLayout:SfTextInputLayout Hint="Bill Name" ContainerType="Outlined">
+                    <Entry Text="{Binding BillObject.Name}"/>
+                </inputLayout:SfTextInputLayout>
+
+                <inputLayout:SfTextInputLayout Hint="Select Bill Type">
+                    <editors:SfComboBox ItemsSource="{Binding BillPeriods}" DisplayMemberPath = "PeriodName" TextMemberPath = "PeriodName" IsEditable="false" Placeholder="Select Bill Period" SelectedItem="{Binding SelectedPeriod}" />
+                </inputLayout:SfTextInputLayout>
+
+                <inputLayout:SfTextInputLayout Hint="Bill amount" >
+                    <editors:SfNumericEntry Value="{Binding BillObject.Amount}" CustomFormat="##.##" ShowClearButton="True" IsEditable="True" />
+                </inputLayout:SfTextInputLayout>
+
+                <button:SfCheckBox IsChecked="{Binding BillObject.Active}" Text="Bill Status"/>
+
+                <Label Text="Choose Starting Date" FontAttributes="Bold"></Label>
+                <calendar:SfCalendar SelectedDate="{Binding SelectedDate, Mode=TwoWay}"  View="Month" SelectionMode="Single" ShowTodayButton="True" EnablePastDates="true" SelectionShape="Rectangle" EnableSwipeSelection="true"  CanToggleDaySelection="true">
+                    <calendar:SfCalendar.HeaderView>
+                        <calendar:CalendarHeaderView Background="Gray" TextFormat="MMMM yyyy" ShowNavigationArrows="True">
+                            <calendar:CalendarHeaderView.TextStyle>
+                                <calendar:CalendarTextStyle TextColor="Black" FontSize="14" />
+                            </calendar:CalendarHeaderView.TextStyle>
+                        </calendar:CalendarHeaderView>
+                    </calendar:SfCalendar.HeaderView>
+                </calendar:SfCalendar>
+
+                <Button Text="Save" Command="{Binding SaveObjectCommand}"  HeightRequest="50"  CornerRadius="5"></Button>
+            </VerticalStackLayout>
+        </Frame>
+    </ScrollView>
+
+</ContentPage>

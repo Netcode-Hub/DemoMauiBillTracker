@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="DemoMauiBillTracker.Views.HomePage"
+             xmlns:viewmodel="clr-namespace:DemoMauiBillTracker.ViewModels"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:DataType="viewmodel:HomePageViewModel"
+             xmlns:model="clr-namespace:DemoMauiBillTracker.Models"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="#363733"
+             BackgroundColor="#363733"
+             Title="{Binding Title}">
+
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#363733" StatusBarStyle="LightContent"></toolkit:StatusBarBehavior>
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions=".50*,.50*">
+
+            <HorizontalStackLayout Grid.Row="0">
+                <Label Text="B" FontSize="26" Margin="10,0,0,0" TextColor="#A9ED2A" FontFamily="Brush Script MT"></Label>
+                <Label Text="ill Tracker App" HorizontalOptions="StartAndExpand" Margin="0,10,0,20" TextColor="White" FontAttributes="Bold"></Label>
+            </HorizontalStackLayout>
+
+            <Frame BackgroundColor="#A9ED2A" IsClippedToBounds="True" Grid.ColumnSpan="2" Grid.Row="1" HeightRequest="100" Margin="10,0,10,0">
+                <VerticalStackLayout Margin="0,0,0,5" Spacing="8">
+                    <Label Text="Bill amount due to be paid" FontAttributes="Bold" TextColor="Black" VerticalTextAlignment="Start"></Label>
+                    <Label Text="{Binding TotalBill, StringFormat='GHS {0}'}" FontSize="20" VerticalTextAlignment="End" FontAttributes="Bold"></Label>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Grid.Row="2" Margin="10,20,10,10" BackgroundColor="#363733" Grid.ColumnSpan="2">
+                <Label Text="Due Bills" HorizontalOptions="CenterAndExpand" TextColor="Wheat" FontSize="Subtitle" FontAttributes="Bold"></Label>
+            </Frame>
+
+            <CollectionView  ItemsSource="{Binding DueBills}" Grid.Row="3" Grid.ColumnSpan="2" Margin="8,10,0,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DueBill">
+                        <Grid ColumnDefinitions="Auto,Auto">
+
+                            <Frame WidthRequest="185" BackgroundColor="#FDAB9F">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold"  HorizontalOptions="CenterAndExpand"></Label>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="Type: "></Label>
+                                        <Label Text="{Binding BillType}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="Month:"></Label>
+                                        <Label Text="{Binding DueDateName}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10" Margin="0,0,0,8">
+                                        <Label Text="Amount:"></Label>
+                                        <Label Text="{Binding Amount}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10" Margin="0,0,0,8">
+                                        <Label Text="Date"></Label>
+                                        <Label Text="{Binding DueDate.Date, StringFormat='{0:MMM dd, yyyy}'}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Button Text="Unpaid" FontAttributes="Bold" BackgroundColor="Transparent" TextColor="blue" CommandParameter="{Binding Id}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomePageViewModel}}, Path=PayBillCommand}"></Button>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Frame Grid.Row="4" Margin="10,20,10,10" BackgroundColor="#363733" Grid.ColumnSpan="2">
+                <Label Text="Recent Bill Payments" HorizontalOptions="CenterAndExpand" TextColor="Wheat" FontSize="Subtitle" FontAttributes="Bold"></Label>
+            </Frame>
+
+            <CollectionView  ItemsSource="{Binding BillsHistory}" Grid.Row="5" Grid.ColumnSpan="2" Margin="8,10,0,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:BillHistory">
+                        <Grid ColumnDefinitions="Auto,Auto">
+
+                            <Frame WidthRequest="185" BackgroundColor="Violet">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding Name}" TextColor="Black" FontAttributes="Bold"  HorizontalOptions="CenterAndExpand"></Label>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="Type: "></Label>
+                                        <Label Text="{Binding BillType}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="Month:"></Label>
+                                        <Label Text="{Binding DueDateName}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10" Margin="0,0,0,8">
+                                        <Label Text="Amount:"></Label>
+                                        <Label Text="{Binding Amount}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10" Margin="0,0,0,8">
+                                        <Label Text="Date"></Label>
+                                        <Label Text="{Binding DueDate.Date, StringFormat='{0:MMM dd, yyyy}'}"></Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Button Text="Paid" BackgroundColor="Transparent" FontAttributes="Bold" TextColor="Black" CommandParameter="{Binding Id}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomePageViewModel}}, Path=PayBillCommand}"></Button>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
+</ContentPage>
